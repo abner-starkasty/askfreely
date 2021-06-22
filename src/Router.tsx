@@ -9,8 +9,8 @@ export function Router() {
   return (
     <BrowserRouter>
       <AuthContextProvider>
-        <Route path="/" exact component={Home}/>
-        <Route path="/rooms/new" exact component={NewRoom}/>
+        <Route path="/" exact component={Home} />
+        <Route path="/rooms/new" exact component={NewRoom} />
       </AuthContextProvider>
     </BrowserRouter>
   )
