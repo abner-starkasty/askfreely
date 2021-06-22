@@ -1,6 +1,8 @@
+import { Router } from "./Router";
+
 function App() {
   return (
-    <h1>Hello NLW</h1>
+    <Router />
   );
 }
 
