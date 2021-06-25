@@ -9,6 +9,8 @@ import { RoomCode } from '../../components/RoomCode'
 import { Question } from '../../components/Question'
 
 import logoImg from '../../assets/images/logo.svg'
+import checkImg from '../../assets/images/check.svg'
+import answerImg from '../../assets/images/answer.svg'
 
 import './styles.scss'
 
@@ -30,6 +32,18 @@ export function RoomAdmin() {
 
       history.push('/')
     }
+  }
+
+  async function handleCheckQuestionAsAnswered(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isAnswered: true,
+    })
+  }
+
+  async function handleHighlightQuestion(questionId: string) {
+    await database.ref(`rooms/${roomId}/questions/${questionId}`).update({
+      isHighlighted: true,
+    })
   }
 
   async function handleDeleteQuestion(questionId: string) {
@@ -64,11 +78,31 @@ export function RoomAdmin() {
               key={question.id}
               content={question.content}
               author={question.author}
+              isAnswered={question.isAnswered}
+              isHighlighted={question.isHighlighted}
             >
+              {!question.isAnswered && (
+                <>
+                  <button
+                    type="button"
+                    aria-label="Mark question as answered"
+                    onClick={() => handleCheckQuestionAsAnswered(question.id)}
+                  >
+                    <img src={checkImg} alt="Mark question as answered" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Highlight the question"
+                    onClick={() => handleHighlightQuestion(question.id)}
+                  >
+                    <img src={answerImg} alt="Highlight the question" />
+                  </button>
+                </>
+              )}
               <button
                 className="delete-button"
                 type="button"
-                aria-label="Mark as I liked"
+                aria-label="Delete question"
                 onClick={() => handleDeleteQuestion(question.id)}
               >
                 <svg
